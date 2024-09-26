@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "Perplexity - Google Search Toggle",
+    "version": "1.0",
+    "description": "Switches between Perplexity and Google search.",
+    "permissions": [
+      "tabs",
+      "webNavigation"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "host_permissions": [
+      "*://*.google.com/*"
+    ]
+  }
+  
