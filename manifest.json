@@ -1,17 +1,20 @@
-{
+  {
     "manifest_version": 3,
     "name": "Perplexity - Google Search Toggle",
-    "version": "1.0",
+    "version": "1.2",
     "description": "Switches between Perplexity and Google search.",
-    "permissions": [
-      "tabs",
-      "webNavigation"
-    ],
+    "permissions": ["tabs", "webNavigation", "scripting"],
     "background": {
       "service_worker": "background.js"
     },
-    "host_permissions": [
-      "*://*.google.com/*"
+    "icons": {
+      "16": "search.png"
+    },    "host_permissions": ["*://*.google.com/*", "https://chatgpt.com/*"],
+    "content_scripts": [
+      {
+        "matches": ["https://chatgpt.com/*"],
+        "js": ["chatgpt_inject.js"]
+      }
     ]
   }
   
