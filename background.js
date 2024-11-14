@@ -10,6 +10,15 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
       const words = query.trim().split(/\s+/);
       const firstWord = words[0].toLowerCase();
 
+      // If -goo prefix, stay on Google by returning early
+      if (firstWord === '-goo') {
+        words.shift(); // Remove the prefix
+        const newQuery = words.join(' ');
+        const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(newQuery)}`;
+        chrome.tabs.update(details.tabId, { url: googleUrl });
+        return;
+      }
+
       if (firstWord === '-pr' || firstWord === '-p' || firstWord === '-c') {
         words.shift(); // Remove the prefix
         const newQuery = words.join(' ');
@@ -47,6 +56,11 @@ chrome.webNavigation.onCommitted.addListener(function (details) {
 
           chrome.tabs.update(details.tabId, { url: perplexityUrl });
         }
+      } else {
+        // Default to Perplexity Pro for all other searches
+        const perplexityUrl = 'https://www.perplexity.ai/search?q=' + 
+          encodeURIComponent(query) + '&copilot=true';
+        chrome.tabs.update(details.tabId, { url: perplexityUrl });
       }
     }
   }
